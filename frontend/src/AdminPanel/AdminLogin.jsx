@@ -1,39 +1,32 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import './Login.css';
+import './Login.css'; 
 import login from './login.png';
 import writo from './writo.png';
 
-const Login = () => {
+const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Import useNavigate from react-router-dom
+  const navigate = useNavigate();
 
-  const handleLogin = async(event) => {
-    event.preventDefault(); // Prevent the default form submission
-
-    // Here, you would typically handle login logic, e.g., sending the email and password to an API
-    console.log('Email:', email);
-    console.log('Password:', password);
-    try{
-         const response = await axios.post("http://localhost:5000/login",{
-           email,password
-         });
-         console.log(response);
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:5000/admin/login", {
+         email, password });
+      
+      console.log(response);
          alert(response.data.message);
          if (response.status === 200) {
-            // navigate(`/home/${response.data.username}`);
-            const course = response.data.course; // Get the course from the response
-            navigate(`/${course.toLowerCase()}`); // Navigate to the corresponding course page
+            navigate(`/addQuestion/${response.data.username}`);
 
+      } else {
+        alert("You are not authorized to access the admin panel");
       }
-    }
-    catch(error){
+    } catch (error) {
       alert(error.response ? error.response.data.message : 'Login failed');
     }
-    // For example, on successful login, navigate to the homepage
-   
   };
 
   return (
@@ -67,9 +60,6 @@ const Login = () => {
             </div>
             <button type="submit" className="login-btn">Login</button>
           </form>
-          <p className="signup-text">
-            Don't have an account? <Link to="/Signup" className="signup-link">Sign Up</Link>
-          </p>
         </div>
         <div className="right-section">
           <img src={login} alt="Login illustration" className="login-image" />
@@ -79,4 +69,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

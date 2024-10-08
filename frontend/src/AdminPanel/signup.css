@@ -122,52 +122,5 @@
   .login-link:hover {
     text-decoration: underline;
   }
- /* Style for the course select dropdown */
-.signup-form .form-group {
-  margin-bottom: 10px;
-}
-
-.signup-form label {
-  font-size: 14px;
-  color: #333;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.signup-form select {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #333;
-}
-
-.signup-form select:focus {
-  outline: none;
-  border-color: #007BFF;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.signup-form select option {
-  padding: 10px;
-}
-
-/* General signup button styling */
-.signup-btn {
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.signup-btn:hover {
-  background-color: #0056b3;
-}
-
+ 
   

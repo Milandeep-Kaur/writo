@@ -10,16 +10,18 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cpassword, setCpassword] = useState('');
+  const [course, setCourse] = useState('');
   const navigate = useNavigate();
   
   const handleRegister=async(e)=>{
         e.preventDefault();
         try{
            const response = await axios.post("http://localhost:5000/register",{
-                            username,email,password,cpassword
+                            username,email,password,cpassword,course,
            });
            alert(response.data);
            if(response.status === 201){
+            localStorage.setItem("course", course); 
             navigate("/login");
            }
         }
@@ -72,6 +74,20 @@ const Signup = () => {
                      id="confirm-password" 
                      placeholder="Confirm your password" 
                      required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="course">Course</label>
+              <select 
+                     value={course}
+                     onChange={(e) => setCourse(e.target.value)}
+                     id="course"
+                     required>
+                <option value="" disabled>Select your course</option>
+                <option value="JEE">JEE</option>
+                <option value="NEET">NEET</option>
+                <option value="12th">12th</option>
+                <option value="10th">10th</option>
+              </select>
             </div>
             <button type="submit" className="signup-btn">Sign Up</button>
           </form>
