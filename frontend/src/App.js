@@ -3,15 +3,15 @@ import {BrowserRouter , Routes, Route} from "react-router-dom";
 import './App.css';  
 //import Footer from './components/Footer/index.js'; 
 //import Services from './components/Services/index.js';
-//import Courses from './components/Courses/index.js';
+
 import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import AddQuestion from './pages/AddQuestion.jsx';
 import Signup from './pages/Signup/Signup.jsx';
-import NEET from './components/Courses/NEET/neet.js';
-import JEE from './components/Courses/JEE/Jee.js';
+import NEET from './components/NEET/NEET.jsx';
+import JEE from './components/JEE/JEE.jsx';
 import AdminLogin from './AdminPanel/AdminLogin.jsx';
-import Test from './components/Courses/JEE/Test.jsx'; 
+import Test from './pages/Test.jsx'; 
 import AdminSignup from './pages/Signup/Signup.jsx';
 //import About from './components/About/index.js';
 

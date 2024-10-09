@@ -1,50 +1,31 @@
-import React, { useState } from 'react';
-import './jee.css';
+import React from 'react';
+import './JEE.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
-const Jee = () => {
+
+const JEE = () => {
     const navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState('');
-    const course = localStorage.getItem('course');
-    const userEmail = localStorage.getItem('email');
-    const handleTestClick = async (testBox) => {
-        try {
-            const testId = `t${testBox}`;
-            console.log("Checking if test is attempted for testId:", testId);
-    
-            const response = await axios.post('http://localhost:5000/checkAttempts', {
-                email: userEmail, // Pass user's email to check attempts
-                testId: testId
-            });
-    
-            console.log("Received response from backend:", response.data);
-    
-            const { attempted, message } = response.data;
-    
-            if (attempted) {
-                setErrorMessage(message); // Show message that user has already attempted
-                console.log("Error:", message);
-            } else {
-                console.log("Test not attempted, allowing navigation");
-    
-                // Record the attempt when they start the test
-                await axios.post('http://localhost:5000/attemptTest', {
-                    email: userEmail,
-                    testId: testId
-                });
-    
-                console.log("Navigating to test page");
-                navigate(`/${course}/${testId}`); // Redirect to test page
-            }
-        } catch (error) {
-            console.error('Error during test click process:', error);
-            setErrorMessage('There was an error. Please try again later.');
-        }
-    };
-    
-       
+    const level= "Easy";
+   
+    const handleTestClick = (testBox) => {
+        console.log("Test number clicked:", testBox);
+        const course = localStorage.getItem("course");
+        console.log("Selected Course:", course);
 
+        let testId;
+        if (testBox === 1) {
+            testId = "t1";
+        } else if (testBox === 2) {
+            testId = "t2";
+        } else if (testBox === 3) {
+            testId = "t3";
+        }
+
+        // Navigate to the Test page with course and testId as route parameters
+        navigate(`/${course}/${testId}`);
+
+
+    };
     return (
         <div className="jee-page">
             <div className="slogan-section">
@@ -64,6 +45,7 @@ const Jee = () => {
                 </ul>
             </div>
 
+        
             <div className="test-section">
                 <h2>Mock Tests for JEE 2025</h2>
                 <div className="test-grid">
@@ -80,10 +62,9 @@ const Jee = () => {
                         <button className="take-test-btn" onClick={() => handleTestClick(3)}>Take Test</button>
                     </div>
                 </div>
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
         </div>
     );
 };
 
-export default Jee;
+export default JEE;

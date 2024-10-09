@@ -1,7 +1,7 @@
 import React from 'react';
-import './neet.css';
+import './NEET.css';
 
-const neet = () => {
+const NEET = () => {
     return (
         <div className="neet-page">
            
@@ -43,4 +43,4 @@ const neet = () => {
     );
 };
 
-export default neet;
+export default NEET;

@@ -3,10 +3,10 @@ import {useParams} from "react-router-dom";
 import Typed from 'typed.js';
 import './Home.css'; 
 import logo from './logo.png';
-import About from '../../components/About/index.js';
-import Courses from '../../components/Courses/index.js';
-import Footer from '../../components/Footer/index.js';
-import Services from '../../components/Services/index.js';
+import About from '../../components/About/index.jsx';
+import Courses from '../../components/Courses/index.jsx';
+import Footer from '../../components/Footer/index.jsx';
+import Services from '../../components/Services/index.jsx';
 
 
 const Home = () => {
