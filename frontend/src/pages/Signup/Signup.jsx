@@ -21,7 +21,7 @@ const Signup = () => {
            });
            alert(response.data);
            if(response.status === 201){
-            localStorage.setItem("course", course); 
+            // localStorage.setItem("course", course);  
             navigate("/login");
            }
         }

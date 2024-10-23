@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import {useParams} from "react-router-dom";
+import {useParams,Link} from "react-router-dom";
 import Typed from 'typed.js';
 import './Home.css'; 
 import logo from './logo.png';
@@ -11,7 +11,7 @@ import Services from '../../components/Services/index.jsx';
 
 const Home = () => {
     const el = useRef(null); // Create a reference to store the DOM element for animation
-    const {username} = useParams();
+    // const {username} = useParams();
 
     useEffect(() => {
         const typed = new Typed(el.current, {
@@ -37,11 +37,11 @@ const Home = () => {
             <nav className="navbar">
                 <div className="logo">
                     <img src={logo} alt="Logo" className="logo-img" />
-                    <span className="company-name">WRITO EDUCATION {username}</span>
+                    <span className="company-name">WRITO EDUCATION </span>
                 </div>
                 <div className="nav-buttons">
-                    <button className="nav-btn">Login</button>
-                    <button className="nav-btn">Signup</button>
+                    <button className="nav-btn"><Link to="/login">Login</Link></button>
+                    <button className="nav-btn"><Link to="/signup">Signup</Link></button>
                 </div>
             </nav>
 

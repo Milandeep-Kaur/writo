@@ -14,18 +14,22 @@ const Login = () => {
     event.preventDefault(); // Prevent the default form submission
 
     // Here, you would typically handle login logic, e.g., sending the email and password to an API
-    console.log('Email:', email);
-    console.log('Password:', password);
-    try{
+       try{
          const response = await axios.post("http://localhost:5000/login",{
            email,password
          });
          console.log(response);
          alert(response.data.message);
          if (response.status === 200) {
-            // navigate(`/home/${response.data.username}`);
-            const course = response.data.course; // Get the course from the response
-            navigate(`/${course.toLowerCase()}`); // Navigate to the corresponding course page
+            
+            const userData={
+              userId :response.data.userId,
+              username:response.data.username,
+              course:response.data.course,
+            };
+            localStorage.setItem("user",JSON.stringify(userData));
+            
+            navigate(`/${userData.course.toLowerCase()}`); // Navigate to the corresponding course page
 
       }
     }
@@ -42,6 +46,7 @@ const Login = () => {
         <div className="left-section">
           <img src={writo} alt="Writo" className="writo-img" />
           <h1>Writo Education</h1>
+          
           <form className="login-form" onSubmit={handleLogin}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -69,6 +74,9 @@ const Login = () => {
           </form>
           <p className="signup-text">
             Don't have an account? <Link to="/Signup" className="signup-link">Sign Up</Link>
+          </p>
+           <p className="signup-text">
+            Are you an Admin? <Link to="/admin/login" className="signup-link">Login</Link>
           </p>
         </div>
         <div className="right-section">

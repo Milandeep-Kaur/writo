@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom"; // Import Link from react-router-dom
 import axios from 'axios';
-import './signup.css';
+import signup from './signup.png';
+import './adminsignup.css';
 
 const AdminSignup = () => {
   const [username, setUsername] = useState('');

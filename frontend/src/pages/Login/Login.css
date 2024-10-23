@@ -113,7 +113,7 @@ input {
   }
 
   .signup-text {
-    margin-top: 20px;
+    margin:0px;
     font-size: 1rem;
     color: #333;
   }

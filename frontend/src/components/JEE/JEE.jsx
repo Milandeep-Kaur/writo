@@ -1,29 +1,36 @@
-import React from 'react';
-import './JEE.css';
+
+import React,{useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import './JEE.css';
 
 
 const JEE = () => {
-    const navigate = useNavigate();
-    const level= "Easy";
-   
-    const handleTestClick = (testBox) => {
-        console.log("Test number clicked:", testBox);
-        const course = localStorage.getItem("course");
-        console.log("Selected Course:", course);
+    const [userData,setUserData] = useState(null);
+    const navigate = useNavigate();  
+    
+   useEffect(()=>{
+       const storedUserData = localStorage.getItem("user");
+       setUserData(JSON.parse(storedUserData));
+   },[]);
 
-        let testId;
-        if (testBox === 1) {
-            testId = "t1";
-        } else if (testBox === 2) {
-            testId = "t2";
-        } else if (testBox === 3) {
-            testId = "t3";
+
+    const handleTestClick = async(testBox) => {
+        try{
+        const {userId,username,course}=userData;
+        const testId = `t${testBox}`;  
+        const response = await axios.post("http://localhost:5000/startTest",{
+            userId,username,course,testId});
+
+        if(response.status===200){
+            alert(response.data.message);
+            navigate(`/${course}/${testId}`);
         }
-
-        // Navigate to the Test page with course and testId as route parameters
-        navigate(`/${course}/${testId}`);
-
+    }
+        catch(error){
+           alert(error.response ? error.response.data : 'Attempted Before');
+        }
+        
 
     };
     return (
