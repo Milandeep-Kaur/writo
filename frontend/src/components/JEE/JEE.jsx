@@ -1,4 +1,3 @@
-
 import React,{useState,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
@@ -15,11 +14,30 @@ const JEE = () => {
    },[]);
 
 
-    const handleTestClick = async(testBox) => {
+    // const handleTestClick = async(testBox) => {
+    //     try{
+    //     const {userId,username,course}=userData;
+    //     const testId = `t${testBox}`;  
+    //     const response = await axios.post("http://localhost:5000/startTest",{
+    //         userId,username,course,testId});
+
+    //     if(response.status===200){
+    //         alert(response.data.message);
+    //         navigate(`/${course}/${testId}`);
+    //     }
+    // }
+    //     catch(error){
+    //        alert(error.response ? error.response.data : 'Attempted Before');
+    //     }
+        
+
+    // };
+   const handleTestClick = async(testBox) => {
         try{
         const {userId,username,course}=userData;
-        const testId = `t${testBox}`;  
-        const response = await axios.post("http://localhost:5000/startTest",{
+        console.log(userId);
+        const testId = `T${testBox}`;  
+        const response = await axios.post("http://localhost:5000/startTest2",{
             userId,username,course,testId});
 
         if(response.status===200){
@@ -75,3 +93,5 @@ const JEE = () => {
 };
 
 export default JEE;
+
+

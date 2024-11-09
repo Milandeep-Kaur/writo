@@ -1,14 +1,11 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './Feedback.css'; // Import the Feedback.css for styling
 
 const Feedback = () => {
     const location = useLocation(); // Get data passed from the previous page
     const navigate = useNavigate(); // Hook to navigate between routes
-    const { feedback,score,status, username, course, testId } = location.state; // Extract feedback object
-
-    // Determine passing score (e.g., 50% of total questions)
-    // const passingScore = Math.ceil(feedback.length/ 2); // Half of the total questions
-    // const status = score >= passingScore ? 'Passed' : 'Failed'; // Determine pass/fail status
+    const { feedback, score, status, username, course, testId } = location.state; // Extract feedback object
 
     // Function to handle navigation back to JEE page
     const handleDone = () => {
@@ -16,33 +13,49 @@ const Feedback = () => {
     };
 
     return (
-        <div>
-            <h2>{username.toUpperCase()}</h2>
-            <h3>{course} - Test {testId}</h3>
-            <p>Score: {score}/{feedback.length}</p>
-            <p>Status: <strong>{status}</strong></p>
-
-            <h3>Test Feedback</h3>
-            {feedback.map((question, index) => (
-                <div key={question.questionId}>
-                    <h4>Question {index + 1}:</h4>
-                    <p>{question.question}</p>
-
-                    {/* Show user's answer in green if correct, red if wrong */}
-                   <p style={{ color: question.isCorrect ? 'green' : 'red' }}>
-                        Your Answer: {question.userAnswer}
-                    </p>
-
-                    {/* Always display the correct answer */}
-                    <p style={{ color: 'green' }}>
-                        Correct Answer: {question.correctAnswer}
-                    </p>
+        <>
+            <div className="feedback-header">
+                <h1>Test Feedback</h1>
+                <h2>{username.toUpperCase()}</h2>
+                
+                <div className="feedback-row">
+                    <h3 className="course">COURSE: {course}</h3>
+                    <p className="score">SCORE: {score}/{feedback.length}</p>
                 </div>
+
+                <div className="feedback-row">
+                    <h3 className="testId">TESTID: {testId.toUpperCase()}</h3>
+                    <p>
+                    <strong className={status.toLowerCase() === 'passed' ? 'status-passed' : 'status-failed'}>
+                        {status}
+                    </strong>
+                    </p>
+
+                </div>
+            </div>
+            {feedback.map((question, index) => (
+            <div key={question.questionId} className="feedback-card">
+                <div className={`question-wrapper ${question.isCorrect ? 'correct-wrapper' : 'incorrect-wrapper'}`}>
+                <h4>{index + 1} Out of {feedback.length}</h4>
+                <p>{question.question}</p>
+                </div>
+
+                {/* Show user's answer in green if correct, red if wrong */}
+                <p className={question.isCorrect ? 'correct' : 'incorrect'}>
+                Your Answer: {question.userAnswer}
+                </p>
+
+                {/* Always display the correct answer */}
+                <p className="correct">
+                Correct Answer: {question.correctAnswer}
+                </p>
+            </div>
             ))}
 
+
             {/* Done button to return to the previous page */}
-            <button onClick={handleDone}>Review </button>
-        </div>
+            <button className="review-button" onClick={handleDone}>Seen</button>
+        </>
     );
 };
 

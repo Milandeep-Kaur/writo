@@ -1,0 +1,131 @@
+body {
+    background-color: #f4f4f4;
+}
+.test-header h1{
+    text-align: left;
+    color: black;
+    margin-bottom: 0px;
+}
+.test-header h2{
+    text-align: left;
+    color: black;
+    margin: 0px auto;
+}
+.test-header h3{
+    text-align: left;
+    color: black;
+    margin: 0px auto;
+}
+.test-header h4{
+    font-size: 20px;
+    font-weight: 500;
+}
+.question-wrapper {
+    margin-bottom: 30px; /* Increased margin between question wrappers */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+   
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.question-wrapper:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);
+}
+.question-text{
+background-color:#d4edda;
+padding:8px;
+}
+.question-text p{
+    font-size: 18px;
+    font-weight: 600;
+}
+.question-text h4{
+    color:#696969;
+    
+}
+.test-header h4 span {
+    color: rgb(222, 0, 0); /* Red color for note heading */
+    font-weight: bold; /* Optional: Make the note heading bold */
+}
+.options-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 10px; /* Add some padding for better visual feedback */
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+
+.option.selected {
+    background-color:  #e0f0ff; /* Light blue background for selected option */
+}
+
+input[type="radio"] {
+    appearance: none; /* Hide default radio button */
+    -webkit-appearance: none; /* Hide default radio button in Safari */
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+input[type="radio"]:checked {
+    background-color: #007bff; /* Change to your desired color */
+    border-color: #0056b3; /* Darker border for checked state */
+}
+
+label {
+    margin-left: 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between; /* Distributes space between buttons */
+    align-items: center; /* Centers items vertically */
+    margin-top: 20px; /* Adjust spacing as needed */
+}
+.spacer {
+    flex-grow: 1; /* Takes up space between the previous and next buttons */
+}
+
+.next-icon,
+.prev-icon {
+    cursor: pointer;
+    color: #007bff; /* Change color as needed */
+    transition: color 0.3s;
+    /* No need for align-items here as it's managed by the flex container */
+}
+
+.next-icon:hover,
+.prev-icon:hover {
+    color: #0056b3; /* Darker color on hover */
+}
+
+button {
+    padding: 12px 24px;
+    background-color:#007bff; 
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker green on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
+}

@@ -73,11 +73,16 @@ const Login = () => {
             <button type="submit" className="login-btn">Login</button>
           </form>
           <p className="signup-text">
-            Don't have an account? <Link to="/Signup" className="signup-link">Sign Up</Link>
+          Forgot Password? <Link to="/forgot-password" className="signup-link">Click here</Link>
+        </p>
+          <p className="signup-text">
+            Don't have an account? <Link to="/signup" className="signup-link">Sign Up</Link>
           </p>
            <p className="signup-text">
             Are you an Admin? <Link to="/admin/login" className="signup-link">Login</Link>
           </p>
+         
+
         </div>
         <div className="right-section">
           <img src={login} alt="Login illustration" className="login-image" />

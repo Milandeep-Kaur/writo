@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { AvatarGenerator } from 'random-avatar-generator';
 import './StudentProfile.css'; 
+import { MdOutlineRefresh } from "react-icons/md";
 
 const StudentProfile = () => {
   const [avatarUrl, setAvatarUrl] = useState('');
@@ -65,11 +66,8 @@ const StudentProfile = () => {
         <div className="profile-header">
           <img src={avatarUrl} alt="Avatar" className="avatar" />
           {/* Font Awesome Refresh Icon */}
-          <i 
-            className="fa fa-refresh change-avatar-icon" 
-            onClick={generate} 
-            title="Change Avatar"
-          ></i>
+          <MdOutlineRefresh className="refresh-icon" onClick={generate} />
+
           <h1>{profile.username.toUpperCase()}</h1>
           <h2>{profile.course} Student</h2>
         </div>

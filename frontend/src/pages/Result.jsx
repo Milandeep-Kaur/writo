@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {format} from "date-fns"; // it is used for formating the date format
+import { format } from "date-fns";
+import "./Result.css"; // Importing the CSS file
+import { FaPencilRuler } from "react-icons/fa";
+import { BiSolidBadgeCheck } from "react-icons/bi"; 
+import { MdDangerous } from "react-icons/md";
+import { IoMdTimer } from "react-icons/io";
 
 const Result = () => {
-  const [resultData, setResultData] = useState(null);     //used to store the result data recieved
-  const [attemptData, setAttemptData] = useState(null);   //used to store the attempt data recieved
-  const [error, setError] = useState(null);              //used to set the error message of no test gven 
-  
+  const [resultData, setResultData] = useState(null); 
+  const [attemptData, setAttemptData] = useState(null);  
+  const [error, setError] = useState(null); 
+
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('user'));   //to get the user id which is saved in key user
+    const userData = JSON.parse(localStorage.getItem('user'));  
     
-    // Check if userData exists before trying to access userId
     if (userData && userData.userId) {
       const userId = userData.userId;
 
@@ -21,7 +25,7 @@ const Result = () => {
           setAttemptData(response.data.attempt);
         } 
         catch (error) {
-          setError("No test Given Yet!");   //if there is no result then no test is shown
+          setError("No test Given Yet!");   
         }
       };
       
@@ -31,12 +35,10 @@ const Result = () => {
     }
   }, []);
   
-  // If there's an error, display it
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
-  // Define the tests' data
   const testResults = [
     { testId: 't1', status: resultData?.statusT1, score: resultData?.scoreT1, start: attemptData?.startT1, end: attemptData?.endT1 },
     { testId: 't2', status: resultData?.statusT2, score: resultData?.scoreT2, start: attemptData?.startT2, end: attemptData?.endT2 },
@@ -44,26 +46,58 @@ const Result = () => {
   ];
 
   return (
-    <>
+    
+    <div className="result-container">
+    
       {resultData && (
-        <>
-          <h1>Name: {resultData.name}</h1>
-          <h3>Course: {resultData.course}</h3>
-        </>
+        <div className="result-header">
+          <h1>Quiz Result</h1>
+          <h2>{resultData.name.toUpperCase()}</h2>
+          <h3>COURSE: {resultData.course}</h3>
+        </div>
       )}
 
-      {testResults.map((test, index) =>
-        test.status ? (
-          <div key={index}>
-            <p>Test Id: {test.testId}</p>
-            <p>Status: {test.status}</p>
-            <p>Score: {test.score}</p>
-             <p>Starting Time: {format(new Date(test.start), 'dd/MM/yyyy HH:mm:ss')}</p>
-             <p>Finishing Time: {format(new Date(test.end), 'dd/MM/yyyy HH:mm:ss')}</p>
-          </div>
-        ) : null
-      )}
-    </>
+      
+        <div className="test-results">
+          {testResults.map((test, index) =>
+            test.status ? (
+              <div key={index} className="test-card">
+                <div className="test-info">
+                  <p><strong>Test Id:</strong> {test.testId.toUpperCase()}</p>
+          
+                  <p><strong><FaPencilRuler />:  </strong> {test.score}/2</p>
+                  <p>
+                  
+                  {test.status.toLowerCase() === 'passed' ? (
+                    <span>
+                      <BiSolidBadgeCheck style={{ color: 'green',fontSize:'26px' }} /> Passed
+                    </span>
+                  ) : (
+                    <span>
+                      <MdDangerous style={{ color: 'red',fontSize:'26px' }} /> Failed
+                    </span>
+                  )}
+                </p>
+                </div>                  
+                <div className="test-times">
+                  <p className="time-item">
+                    <IoMdTimer className="time-icon" />
+                    <strong>Start:  </strong>
+                    {format(new Date(test.start), 'dd/MM/yyyy HH:mm:ss')}
+                  </p>
+                  <p className="time-item">
+                    <IoMdTimer className="time-icon" />
+                    <strong>Finish: </strong>
+                    {format(new Date(test.end), 'dd/MM/yyyy HH:mm:ss')}
+                  </p>
+                </div>
+
+              </div>
+            ) : null
+          )}
+        </div>
+      
+    </div>
   );
 };
 

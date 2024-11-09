@@ -1,8 +1,9 @@
 .outer-container {
     display: flex;
+   
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height:auto;
     padding: 20px;
     background-color: #f4f4f4;
   }
@@ -26,7 +27,17 @@
     height: 150px;
     margin-bottom: 10px;
   }
-  
+  .refresh-icon {
+    cursor: pointer;
+    color: #007bff; /* Base color */
+    font-size: 24px; /* Icon size */
+    transition: color 0.3s ease, transform 0.2s ease;
+    margin-left: 8px; /* Space between icon and avatar */
+}
+
+.refresh-icon:hover {
+    color: #0056b3; /* Darker color on hover */
+}
   .change-avatar-button {
     background-color: #192351;
     color: #f4f4f4;

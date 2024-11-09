@@ -40,8 +40,8 @@ const Home = () => {
                     <span className="company-name">WRITO EDUCATION </span>
                 </div>
                 <div className="nav-buttons">
-                    <button className="nav-btn"><Link to="/login">Login</Link></button>
-                    <button className="nav-btn"><Link to="/signup">Signup</Link></button>
+                    <button ><Link to="/login">Login</Link></button>
+                    <button><Link to="/signup">Signup</Link></button>
                 </div>
             </nav>
 

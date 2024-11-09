@@ -1,198 +1,132 @@
-// import React, { useEffect, useState } from 'react';
-// import { useParams, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-
-// const Test = () => {
-//     const { testId } = useParams(); // Extract testId from URL
-//     const [questions, setQuestions] = useState([]); // Store questions
-//     const [questionIds,setQuestionIds] = useState([]); // store question ids 
-//     const [answers, setAnswers] = useState({}); // Store user's answers
-//     const navigate = useNavigate();
-
-//     // Retrieve user data from localStorage
-//     const userData = JSON.parse(localStorage.getItem('user')); 
-//     const username = userData.username;
-//     const userId = userData.userId;
-//     const course = userData.course; // Fetch course from localStorage
-    
-
-//     useEffect(() => {
-//         // Fetch questions when the component loads
-//         const fetchQuestions = async () => {
-//           try {
-//              const response = await axios.post('http://localhost:5000/fetchQuestions', { course, testId});
-//              setQuestions(response.data.questions);
-//            }
-//            catch (error) {
-//             alert(error.response ? error.response.data : 'No Question');
-//            }
-//     };
-    
-//         fetchQuestions();
-//       }, [course, testId]);        // it works each time course or id changes 
-
-
-//   // to extract and save all question ids of a particular exam page
-//    useEffect(()=>{
-//          const ids = questions.map((question)=>question._id);
-//          setQuestionIds(ids);
-//    },[questions]);
-
-
-//    // storing the answers of the clicked user
-//    // it stores all the previous answers along with the new ones in the format of  q1:answer1 , q2:answer2 ,  q3: answer3 ...
-//     const handleAnswerSelect = (questionId, option) => {
-//         setAnswers((prevAnswers) => ({
-//             ...prevAnswers,             
-//             [questionId]: option,
-//         }));
-//     };
-
-
-//      // Handle test submission and score calculation
-//     const handleSubmitTest = async () => {
-
-//        try {
-//             const response = await axios.post('http://localhost:5000/endTest', {
-//                 userId,username,course,testId,answers,questionIds,});
-            
-//             const {feedback} = response.data;  // get the feedback object containing all the information
-//             //pass the feedback object along with username,course,testId
-//             navigate("/feedback",{state:{feedback,username,course,testId}});
-//         } 
-//         catch (err) {
-//             alert(err.response.data || 'Error submitting test');
-//         }
-//     };
-
-
-//     return (
-//         <>
-//     <h2>Test for {course} - Test {testId}</h2>
-//     {questions.map((question, index) => (
-//     <div key={question._id}>
-//         <h4>Question {index + 1}:</h4>
-//         <p>{question.question}</p>
-//         <ul>
-//             {question.options.map((option, i) => (
-//                 <li key={i}>
-//                     <input
-//                         type="radio"
-//                         name={question-${question._id}}  // Use question._id as part of the name
-//                         value={option}
-//                         onChange={() => handleAnswerSelect(question._id, option)}  // Pass question._id here
-// //                     />
-//                     />
-//                     {option}
-//                 </li>
-//             ))}
-//         </ul>
-//     </div>
-// ))}
-//     <button onClick={handleSubmitTest}>Submit Test</button>
-//     </>
-//     );
-// };
-
-// export default Test;
-
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { IoArrowForwardCircleOutline, IoArrowBackCircleOutline } from 'react-icons/io5'; // Import the icons
+import './Test.css';
 
 const Test = () => {
-    const { testId } = useParams(); // Extract testId from URL
-    const [questions, setQuestions] = useState([]); // Store questions
+    const { testId } = useParams();
+    const [questions, setQuestions] = useState([]);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // State for the current question index
     const [questionIds,setQuestionIds] = useState([]); // store question ids 
-    const [answers, setAnswers] = useState({}); // Store user's answers
+    const [answers, setAnswers] = useState({}); // State for answers
     const navigate = useNavigate();
 
-    // Retrieve user data from localStorage
-    const userData = JSON.parse(localStorage.getItem('user')); 
+    const userData = JSON.parse(localStorage.getItem('user'));
     const username = userData.username;
     const userId = userData.userId;
-    const course = userData.course; // Fetch course from localStorage
-    
+    const course = userData.course;
 
     useEffect(() => {
-        // Fetch questions when the component loads
         const fetchQuestions = async () => {
-          try {
-             const response = await axios.post('http://localhost:5000/fetchQuestions', { course, testId});
-             setQuestions(response.data.questions);
-           }
-           catch (error) {
-            alert(error.response ? error.response.data : 'No Question');
-           }
-    };
-    
+            try {
+                const response = await axios.post('http://localhost:5000/fetchQuestions', { course, testId });
+                setQuestions(response.data.questions);
+            } catch (error) {
+                alert(error.response ? error.response.data : 'No Question');
+            }
+        };
         fetchQuestions();
-      }, [course, testId]);        // it works each time course or id changes 
+    }, [course, testId]);
 
-
-  // to extract and save all question ids of a particular exam page
+    // to extract and save all question ids of a particular exam page
    useEffect(()=>{
          const ids = questions.map((question)=>question._id);
          setQuestionIds(ids);
    },[questions]);
 
-
-   // storing the answers of the clicked user
-   // it stores all the previous answers along with the new ones in the format of  q1:answer1 , q2:answer2 ,  q3: answer3 ...
-    const handleAnswerSelect = (questionId, option) => {
+    const handleOptionChange = (option) => {
+        // Update the answer for the current question
         setAnswers((prevAnswers) => ({
-            ...prevAnswers,             
-            [questionId]: option,
+            ...prevAnswers,
+            [questions[currentQuestionIndex]._id]: option,
         }));
     };
 
+    const handleNextQuestion = () => {
+        if (currentQuestionIndex < questions.length - 1) {
+            setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        }
+    };
 
-     // Handle test submission and score calculation
-     const handleSubmitTest = async () => {
+    const handlePreviousQuestion = () => {
+        if (currentQuestionIndex > 0) {
+            setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+        }
+    };
+
+    const handleSubmitTest = async () => {
         try {
             const response = await axios.post('http://localhost:5000/endTest', {
                 userId, username, course, testId, answers, questionIds,
             });
-    
-            const { feedback,score,status } = response.data; // Get the feedback object
-            //alert(Test submitted! Your score is ${feedback.score}/${feedback.questions.length});
-            
-            // Pass the feedback object along with username, course, and testId
-            navigate('/feedback', { state: { feedback,score,status, username, course, testId } });
-        } 
-        catch (err) {
+
+            const { feedback, score, status } = response.data;
+            navigate('/feedback', { state: { feedback, score, status, username, course, testId } });
+        } catch (err) {
             alert(err.response.data || 'Error submitting test');
         }
     };
-    
-
 
     return (
         <>
-    <h2>Test for {course} - Test {testId}</h2>
-    {questions.map((question, index) => (
-    <div key={question._id}>
-        <h4>Question {index + 1}:</h4>
-        <p>{question.question}</p>
-        <ul>
-            {question.options.map((option, i) => (
-                <li key={i}>
-                    <input
-                        type="radio"
-                        name={`question-${question._id}`}  // Use question._id as part of the name
-                        value={option}
-                        onChange={() => handleAnswerSelect(question._id, option)}  // Pass question._id here
-//                     />
-                    />
-                    {option}
-                </li>
-            ))}
-        </ul>
-    </div>
-))}
-    <button onClick={handleSubmitTest}>Submit Test</button>
-    </>
+            <div className='test-header'>
+                <h1>Question Page</h1>
+                <h2>{username.toUpperCase()}</h2>
+                <h3 className="course">COURSE: {course}</h3>
+                <h3>TEST ID: {testId.toUpperCase()}</h3>
+                <h4><span>NOTE:</span> Choose the correct answer. There is a limit of 1 hr. Best of Luck🤞</h4>
+            </div>
+
+            {questions.length > 0 && (
+                <div className="question-wrapper">
+                    <div className='question-text'>
+                        <h4>{currentQuestionIndex + 1} Out of {questions.length}</h4>
+                        <p>{questions[currentQuestionIndex].question}</p>
+                    </div>
+                    <div className="options-container">
+                        {questions[currentQuestionIndex].options.map((option, i) => (
+                            <div 
+                                key={i} 
+                                className={`option ${answers[questions[currentQuestionIndex]._id] === option ? 'selected' : ''}`}
+                            >
+                                <input
+                                    type="radio"
+                                    id={`option-${questions[currentQuestionIndex]._id}-${i}`}
+                                    name={`question-${questions[currentQuestionIndex]._id}`}
+                                    value={option}
+                                    onChange={() => handleOptionChange(option)}
+                                    checked={answers[questions[currentQuestionIndex]._id] === option} // Control the radio button
+                                />
+                                <label htmlFor={`option-${questions[currentQuestionIndex]._id}-${i}`}>{option}</label>
+                            </div>
+
+                        ))}
+                    </div>
+                </div>
+            )}
+            
+        <div className="navigation-buttons">
+            {currentQuestionIndex > 0 && (
+                <IoArrowBackCircleOutline 
+                    className="prev-icon"
+                    onClick={handlePreviousQuestion}
+                    size={46}
+                />
+            )}
+             <div className="spacer" /> {/* Spacer for flex alignment */}
+            {currentQuestionIndex < questions.length - 1 ? (
+                <IoArrowForwardCircleOutline 
+                    className="next-icon"
+                    onClick={handleNextQuestion}
+                    size={46}
+                />
+            ) : (
+                <button onClick={handleSubmitTest}>Submit Test</button>
+            )}
+        </div>
+
+        </>
     );
 };
 

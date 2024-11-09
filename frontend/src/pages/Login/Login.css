@@ -113,15 +113,17 @@ input {
   }
 
   .signup-text {
-    margin:0px;
+    margin: 0; /* Remove all margins */
     font-size: 1rem;
     color: #333;
-  }
-  
+    margin-bottom: 0px; /* Add a small margin if needed for spacing */
+}
+
   .signup-link {
     color: #4c7faf;
     text-decoration: none;
     font-weight: 600;
+
   }
   
   .signup-link:hover {

@@ -19,7 +19,7 @@ const AdminLogin = () => {
       console.log(response);
          alert(response.data.message);
          if (response.status === 200) {
-            navigate(`/addQuestion/${response.data.username}`);
+            navigate('/admin/sidebar');
 
       } else {
         alert("You are not authorized to access the admin panel");
